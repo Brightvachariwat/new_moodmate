@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'personalization_page.dart';  // Make sure to import the PersonalizationPage
+import 'personalization_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -11,26 +14,25 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final String _validUsername = "user";
-  final String _validPassword = "password";
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
-      if (_usernameController.text == _validUsername &&
-          _passwordController.text == _validPassword) {
-        // Show success message
+      try {
+        // Attempt to sign in with Firebase Authentication
+
+        // If successful, navigate to PersonalizationPage
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Login successful!")),
+          const SnackBar(content: Text("Login successful!")),
         );
 
-        // Navigate to the Personalization Page
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PersonalizationPage()),
         );
-      } else {
+      } on FirebaseAuthException catch (e) {
+        // If login fails, show error message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Invalid username or password")),
+          SnackBar(content: Text("Error: ${e.message}")),
         );
       }
     }
@@ -39,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[50], // Soft pink background
+      backgroundColor: Colors.pink[50],
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -56,13 +58,12 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Profile picture
                       CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage('assets/avtar.png'),
                       ),
                       SizedBox(height: 16),
-                      // Username field
+                      // Username (email) field
                       TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
@@ -154,3 +155,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+

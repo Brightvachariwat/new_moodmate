@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'personalization_page.dart';
 import 'mood_page.dart';  // Import the MoodPage
-import 'playlist_page.dart';  // Import the PlaylistPage
+import 'playlist_page.dart';
+import 'package:firebase_core/firebase_core.dart';// Import the PlaylistPage
 
-
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
