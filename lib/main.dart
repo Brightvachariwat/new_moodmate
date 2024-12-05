@@ -1,3 +1,4 @@
+import 'package:finalwala_app/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'personalization_page.dart';
@@ -20,8 +21,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'MoodMate',
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: LoginPage(),  // Start with the LoginPage
+      home: const LoginPage(),  // Start with the LoginPage
       routes: {
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignUpPage(),
         '/personalization': (context) => PersonalizationPage(),
         '/mood': (context) => MoodPage(),  // Add route for MoodPage
         '/playlist': (context) => PlaylistPage(),  // Add route for PlaylistPage

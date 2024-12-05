@@ -1,36 +1,44 @@
 import 'package:flutter/material.dart';
-import 'personalization_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'personalization_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
-
-  void _login() async {
+  void _signUp() async {
     if (_formKey.currentState!.validate()) {
       try {
-        // Attempt to sign in with Firebase Authentication
+        // Check if password and confirmation match
+        if (_passwordController.text != _confirmPasswordController.text) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Passwords do not match")),
+          );
+          return;
+        }
 
-        // If successful, navigate to PersonalizationPage
+
+        // Show success message
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Login successful!")),
+          const SnackBar(content: Text("Sign-up successful!")),
         );
 
+        // Navigate to the PersonalizationPage after successful signup
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PersonalizationPage()),
         );
       } on FirebaseAuthException catch (e) {
-        // If login fails, show error message
+        // If signup fails, show error message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Error: ${e.message}")),
         );
@@ -63,11 +71,11 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundImage: AssetImage('assets/avtar.png'),
                       ),
                       SizedBox(height: 16),
-                      // Username (email) field
+                      // Email field
                       TextFormField(
-                        controller: _usernameController,
+                        controller: _emailController,
                         decoration: InputDecoration(
-                          labelText: "Username",
+                          labelText: "Email",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -76,7 +84,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please enter your username";
+                            return "Please enter your email";
+                          } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
+                            return "Please enter a valid email address";
                           }
                           return null;
                         },
@@ -102,24 +112,45 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       SizedBox(height: 16),
-                      // Login and Cancel buttons
+                      // Confirm Password field
+                      TextFormField(
+                        controller: _confirmPasswordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: "Confirm Password",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please confirm your password";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      // Sign Up and Cancel buttons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton(
-                            onPressed: _login,
+                            onPressed: _signUp,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.pink[300],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: Text("Login"),
+                            child: Text("Sign Up"),
                           ),
                           OutlinedButton(
                             onPressed: () {
-                              _usernameController.clear();
+                              _emailController.clear();
                               _passwordController.clear();
+                              _confirmPasswordController.clear();
                             },
                             style: OutlinedButton.styleFrom(
                               side: BorderSide(color: Colors.pink),
@@ -135,26 +166,13 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account?"),
+                          const Text("Already have an account?"),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/signup');
+                              Navigator.pushNamed(context, '/login');
                             },
-                            child: const Text("Sign Up"),
+                            child: const Text("Login"),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      // Remember me checkbox
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                            value: true,
-                            onChanged: (value) {},
-                            activeColor: Colors.pink[300],
-                          ),
-                          const Text("Always remember me"),
                         ],
                       ),
                     ],
@@ -168,4 +186,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
