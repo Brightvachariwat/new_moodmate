@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "394416079011",
+    "project_id": "moodmate-8438a",
+    "storage_bucket": "moodmate-8438a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394416079011:android:b9000d33f909e85db2ff16",
+        "android_client_info": {
+          "package_name": "com.example.finalwala_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaadNbohC3nWsL7XU7jhAwThiEEEUbwMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394416079011:android:aadcada083207816b2ff16",
+        "android_client_info": {
+          "package_name": "com.moodmate.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaadNbohC3nWsL7XU7jhAwThiEEEUbwMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
