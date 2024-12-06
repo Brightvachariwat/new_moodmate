@@ -84,7 +84,12 @@ class _PersonalizationPageState extends State<PersonalizationPage> {
                           style: TextStyle(color: Colors.black),
                         ),
                         underline: SizedBox(),
-                        items: ['English', 'Korean', 'Hindi'].map((String value) {
+                        items: [
+                          'English', 'Hindi', 'Korean', 'Spanish', 'French', 'German',
+                          'Japanese', 'Chinese', 'Italian', 'Portuguese', 'Arabic', 'Russian',
+                          'Bengali', 'Turkish', 'Tamil', 'Telugu', 'Punjabi', 'Gujarati',
+                          'Urdu', 'Malay', 'Thai', 'Vietnamese', 'Dutch', 'Greek'
+                        ].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Row(
@@ -132,7 +137,12 @@ class _PersonalizationPageState extends State<PersonalizationPage> {
                           style: TextStyle(color: Colors.black),
                         ),
                         underline: SizedBox(),
-                        items: ['Pop', 'R&B', 'Acoustic'].map((String value) {
+                        items: [
+                          'Pop', 'R&B', 'Acoustic', 'Rock', 'Jazz', 'Classical', 'Hip Hop',
+                          'Electronic', 'Country', 'Blues', 'Reggae', 'Metal', 'Folk',
+                          'Disco', 'Soul', 'EDM', 'Punk', 'Latin', 'K-Pop', 'Bollywood',
+                          'Instrumental', 'Alternative', 'Indie', 'House', 'Trance', 'Lofi'
+                        ].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Row(
